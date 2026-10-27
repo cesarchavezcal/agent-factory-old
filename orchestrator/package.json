@@ -1,0 +1,16 @@
+{
+  "name": "@cesarchavezcal/agent-orchestrator",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "orch": "./bin/orch.mjs",
+    "orch-mcp": "./bin/orch-mcp.mjs"
+  },
+  "scripts": {
+    "ui": "node ./bin/orch.mjs ui",
+    "runner": "node ./bin/orch.mjs runner",
+    "demo": "node ./bin/orch.mjs demo",
+    "doctor": "node ./bin/orch.mjs doctor",
+    "test": "node --test ./tests/*.test.mjs"
+  }
+}

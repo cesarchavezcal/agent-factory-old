@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Factory Template Configuration",
+  "type": "object",
+  "required": ["project", "invariants", "intake", "models", "gates"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["name", "githubAccount", "stack", "defaultVerifyCmd", "baseBranch"],
+      "properties": {
+        "name": { "type": "string" },
+        "githubAccount": { "type": "string" },
+        "repository": { "type": "string" },
+        "stack": { "enum": ["node", "python", "go", "rust", "custom"] },
+        "defaultVerifyCmd": { "type": "string" },
+        "baseBranch": { "type": "string" }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "required": ["strictZeroCost", "disallowClaude", "requireGitHubAccount"],
+      "properties": {
+        "strictZeroCost": { "type": "boolean" },
+        "disallowClaude": { "type": "boolean" },
+        "requireGitHubAccount": { "type": "string" },
+        "forbidEnvKeys": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "intake": {
+      "type": "object",
+      "properties": {
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "syncMode": { "enum": ["auto", "local-only", "neon"] },
+        "maxConcurrentThreads": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "leaseMinutes": { "type": "integer", "minimum": 1 },
+        "idlePollSeconds": { "type": "integer", "minimum": 10 }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "properties": {
+        "autoMerge": { "type": "boolean" },
+        "mergeMethod": { "enum": ["squash", "merge", "rebase"] },
+        "deleteBranchOnMerge": { "type": "boolean" },
+        "requireChecksPass": { "type": "boolean" }
+      }
+    },
+    "models": {
+      "type": "object",
+      "required": ["scout", "planner", "builderStandard", "builderComplex", "verifier", "interrogator"],
+      "properties": {
+        "scout": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "fallback": { "type": "string" },
+            "mechanism": { "type": "string" },
+            "subagentModel": { "type": "string" }
+          }
+        },
+        "planner": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "fallback": { "type": "string" },
+            "mechanism": { "type": "string" }
+          }
+        },
+        "builderStandard": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "options": { "type": "object" },
+            "fallbackProvider": { "type": "string" },
+            "fallbackModel": { "type": "string" },
+            "mechanism": { "type": "string" },
+            "role": { "type": "string" }
+          }
+        },
+        "builderComplex": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "retryModel": { "type": "string" },
+            "options": { "type": "object" },
+            "retryOptions": { "type": "object" },
+            "mechanism": { "type": "string" },
+            "role": { "type": "string" }
+          }
+        },
+        "verifier": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "fallback": { "type": "string" },
+            "mechanism": { "type": "string" },
+            "subagentModel": { "type": "string" }
+          }
+        },
+        "interrogator": {
+          "type": "object",
+          "required": ["pool", "providerInstanceId", "model", "mechanism"],
+          "properties": {
+            "pool": { "type": "string" },
+            "providerInstanceId": { "type": "string" },
+            "model": { "type": "string" },
+            "fallback": { "type": "string" },
+            "options": { "type": "object" },
+            "mechanism": { "type": "string" },
+            "role": { "type": "string" }
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": ["requireRuntimeVerify", "requireAdversarialInterrogate", "maxRetries"],
+      "properties": {
+        "requireRuntimeVerify": { "type": "boolean" },
+        "requireAdversarialInterrogate": { "type": "boolean" },
+        "maxRetries": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "maxContextBriefBytes": { "type": "integer", "minimum": 512 }
+      }
+    }
+  }
+}
