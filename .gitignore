@@ -1,8 +1,10 @@
 node_modules/
-.verify/
-artifacts/
-.factory/work-items/*.json
-!/.factory/work-items/.gitkeep
-.DS_Store
+dist/
 .env
-.env.*
+.env.local
+.orchestrator/state.json
+.orchestrator/state.json.*.tmp
+.orchestrator/events.jsonl
+.orchestrator/context-brief.md
+.worktrees/
+.DS_Store

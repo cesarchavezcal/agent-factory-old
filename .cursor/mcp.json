@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "agent-factory": {
+      "command": "node",
+      "args": [
+        "./orchestrator/bin/orch-mcp.mjs"
+      ]
+    }
+  }
+}

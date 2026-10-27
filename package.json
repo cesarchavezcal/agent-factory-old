@@ -1,0 +1,20 @@
+{
+  "name": "agent-factory-template",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-cost, zero-API-key multi-model agent factory template (T3 Code: Gemini + Cursor + Grok)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cesarchavezcal/agent-factory.git"
+  },
+  "author": "cesarchavezcal",
+  "scripts": {
+    "setup": "node ./orchestrator/bin/orch.mjs init",
+    "doctor": "node ./orchestrator/bin/orch.mjs doctor",
+    "ui": "node ./orchestrator/bin/orch.mjs ui",
+    "demo": "node ./orchestrator/bin/orch.mjs demo",
+    "runner": "node ./orchestrator/bin/orch.mjs runner",
+    "test": "node --test ./orchestrator/tests/*.test.mjs"
+  }
+}

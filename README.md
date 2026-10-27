@@ -1,75 +1,54 @@
-# Agent factory (Cursor)
+# Agent Factory Template (`@cesarchavezcal`)
 
-A **GitHub template** for a local agent factory in the **Cursor app**. It **mixes three plugins**:
+A **zero-API-key, zero-cost multi-model software factory template** orchestrated natively by **T3 Code** using **Google Antigravity (Gemini 4 Argon + Gemini 3.8 Flash)**, **Cursor (Composer 2.5)**, and **Grok (Grok 4.7 + Grok 4.7 Build-Fast)** with **Neon Free Tier** + **Vercel Hobby** live observability.
 
-| Plugin | Job |
-|---|---|
-| [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin) | Plan + compound memory |
-| [Matt Pocock skills](https://github.com/mattpocock/skills) | Domain, tickets, TDD seams |
-| [pstack](https://github.com/cursor/plugins) | `/poteto-mode` builder + `verify-*` proof |
+---
 
-Composer chat, **Grok** (or inherit-parent). One work item, one foreman. **`autonomy: full`** (default): `/factory-foreman` runs intake → CE plan → pstack build → verify → PR without asking you to continue. You only merge. `/lfg` and Matt `/implement` are not the factory.
+## Complete Skill Catalogs Included
 
-## You need
+### 1. `mattpocock/skills` (Discovery & Specification — Gemini 4 Argon)
+- [`/wayfinder`](file:///.agents/skills/wayfinder/SKILL.md): Greenfield discovery engine mapping high-uncertainty initiatives into discrete `grilling`, `research`, and `prototyping` tickets before formal specification.
+- [`/ask-matt`](file:///.agents/skills/ask-matt/SKILL.md): Meta-router advising which skill to run for your current task.
+- [`/grill-me`](file:///.agents/skills/grill-me/SKILL.md): 1-by-1 interrogator forcing trade-offs and edge-case resolution before code is touched.
+- [`/grill-with-docs`](file:///.agents/skills/grill-with-docs/SKILL.md): Architectural interrogation recording decisions directly into ADRs and project documentation.
+- [`/to-spec`](file:///.agents/skills/to-spec/SKILL.md): Synthesizes discussion into formal specifications at `docs/specs/<slug>.md`.
+- [`/to-tickets`](file:///.agents/skills/to-tickets/SKILL.md): Slices specifications into atomic, vertical tracer-bullet DAG tickets with `verifyCmd`.
+- [`/code-review`](file:///.agents/skills/code-review/SKILL.md): High-level architectural acceptance review.
+- [`/handoff`](file:///.agents/skills/handoff/SKILL.md): Formats session state into clean handoff documents across context windows.
 
-- [Cursor](https://cursor.com) with **Composer**
-- All three plugins:
+### 2. Lauren Tan's `pstack` (`cursor/plugins/pstack` — Composer 2.5 + Flash + Grok)
+- [`/poteto-mode`](file:///.agents/skills/poteto-mode/SKILL.md): Central task router selecting playbooks (`feature`, `bugfix`, `refactor`, `prototype`).
+- [`/how`](file:///.agents/skills/how/SKILL.md): Deep runtime flow, call stack, and boundary tracing before modifying code.
+- [`/why`](file:///.agents/skills/why/SKILL.md): Git archaeology and design rationale analysis (Chesterton's fence).
+- [`/tdd`](file:///.agents/skills/tdd/SKILL.md): Red-green-refactor loop requiring reproducing red tests before fixes.
+- [`/show-me-your-work`](file:///.agents/skills/show-me-your-work/SKILL.md): Mandatory runtime proof requirement (`verifyReceipt.exitCode === 0`).
+- [`/interrogate`](file:///.agents/skills/interrogate/SKILL.md): Adversarial cross-model audit on **Grok 4.7** rejecting scope creep, dead code, and weak tests.
+- [`/unslop`](file:///.agents/skills/unslop/SKILL.md): Anti-slop code hygiene stripping AI conversational filler and boilerplate.
+- [`/no-comments`](file:///.agents/skills/no-comments/SKILL.md): Prunes obvious and workaround comments, preserving only rationale comments.
+- [`/blast-radius`](file:///.agents/skills/blast-radius/SKILL.md): Change impact assessment mapping call sites before editing shared code.
+- [`/architect`](file:///.agents/skills/architect/SKILL.md): Parallel design space exploration comparing type signatures.
+- [`/arena`](file:///.agents/skills/arena/SKILL.md): Multi-model implementation contest grafting the best parts of competing designs.
+- [`/swarm`](file:///.agents/skills/swarm/SKILL.md): Parallel subagent dispatch across independent Git worktrees.
+- [`/figure-it-out`](file:///.agents/skills/figure-it-out/SKILL.md): Autonomous failure diagnostics and hypothesis verification.
+- [`/verify-and-interrogate`](file:///.agents/skills/verify-and-interrogate/SKILL.md): Enforces the dual PStack gate (Flash 3.8 proof + Grok 4.7 audit).
 
-```text
-/add-plugin pstack
-/add-plugin compound-engineering
-/add-plugin mattpocock-skills
-```
+---
 
-- Grok available on your Cursor account (or Auto you are happy to inherit)
-
-## New project
-
-1. Use this repository as a GitHub template (or clone it).
-2. Open the folder in Cursor. Enable the three plugins (this repo’s `.cursor/settings.json` already turns them on once installed).
-3. Start a **Composer** chat on Grok.
-4. `/setup-factory` — keep the Notes sample, or eject it.
-5. Optional follow-ups: `/ce-setup`, `/setup-matt-pocock-skills`.
-6. `/factory-foreman` plus a goal. It should run the whole line and stop at an open PR (or a blocker). You merge.
-
-The sample app lives in `samples/notes`. From that directory:
-
-```bash
-./scripts/prove-create-note.sh
-```
-
-## Existing repo
-
-Copy the portable pack, then `/setup-factory`:
+## Quick Start (Use This Template)
 
 ```bash
-rsync -a template/.cursor/skills/factory-foreman .cursor/skills/
-rsync -a template/.cursor/skills/setup-factory .cursor/skills/
-rsync -a template/.cursor/skills/verify-app .cursor/skills/
-rsync -a template/.cursor/rules/factory.mdc .cursor/rules/
-rsync -a template/.factory .factory
+# 1. Initialize portable MCP & local state
+npm run setup
+
+# 2. Verify invariants (cesarchavezcal GitHub account, 100% Claude-free, 0 API keys)
+npm run doctor
+
+# 3. Run automated verification suite
+npm test
+
+# 4. Launch the Live Mission Control Board (http://localhost:4321)
+npm run ui
+
+# 5. Run a live multi-model simulation
+npm run demo
 ```
-
-Do not overwrite an existing `verify-<app>` without asking. pstack `/create-verification-skill` fills real Launch/Doctor/Drive.
-
-## Layout
-
-```text
-.cursor/skills/factory-foreman/   # routing across CE + Matt + pstack
-.cursor/skills/setup-factory/     # one-time setup
-.cursor/skills/verify-app/        # stubs
-.cursor/skills/verify-notes/      # sample proof
-.cursor/rules/factory.mdc
-.cursor/settings.json             # enables all three plugins
-.factory/                         # config + schema + work items
-samples/notes/                    # deletable demo
-AGENTS.md
-```
-
-## Models
-
-Factory chats: **Composer**. pstack roles: **`inherit-parent`** so Grok/Composer in the parent applies. Override later with `/setup-pstack` if you want per-role slugs.
-
-## License
-
-MIT

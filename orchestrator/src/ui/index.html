@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Factory Mission Control · cesarchavezcal</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --agy: #38bdf8;
+      --cursor: #f59e0b;
+      --grok: #c084fc;
+      --ok: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; padding: 24px; }
+    .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+    .badge { font-family: monospace; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); }
+    .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 20px; }
+    .phase-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+    .phase-card.done { border-color: var(--ok); }
+    .tickets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .ticket { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    pre { font-family: monospace; font-size: 11px; color: var(--muted); white-space: pre-wrap; margin-top: 8px; background: #06090f; padding: 8px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <h2>Agent Factory Live Board</h2>
+      <p style="color:var(--muted);font-size:13px;">Zero-API-Key T3 Orchestrator (Gemini + Cursor Composer + Grok)</p>
+    </div>
+    <div id="gh-badge" class="badge">GitHub: @cesarchavezcal</div>
+  </div>
+  <div id="phases" class="grid"></div>
+  <div id="tickets" class="tickets"></div>
+  <script>
+    function render(state) {
+      document.getElementById("gh-badge").textContent = `GitHub: @${state.githubAccount || "cesarchavezcal"} · Phase: ${state.activePhase}`;
+      const phasesEl = document.getElementById("phases");
+      phasesEl.innerHTML = Object.entries(state.phases || {}).map(([name, p]) => `
+        <div class="phase-card ${p.status}">
+          <div style="font-size:12px;text-transform:uppercase;color:var(--muted)">${name}</div>
+          <div style="font-weight:600;margin:4px 0">${p.model}</div>
+          <div style="font-size:11px;font-family:monospace">${p.status}</div>
+        </div>
+      `).join("");
+
+      const ticketsEl = document.getElementById("tickets");
+      ticketsEl.innerHTML = (state.tickets || []).map(t => `
+        <div class="ticket">
+          <div style="display:flex;justify-content:space-between">
+            <strong>${t.id}: ${t.title}</strong>
+            <span class="badge">${t.status}</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">
+            Pool: <code>${t.assignedPool}</code> · Model: <code>${t.assignedModel}</code>
+          </div>
+          <pre>Flash Verify: ${t.verifyReceipt ? "exitCode=" + t.verifyReceipt.exitCode : "pending"}\nGrok Interrogate: ${t.interrogateReceipt ? t.interrogateReceipt.verdict : "pending"}</pre>
+        </div>
+      `).join("");
+    }
+    const es = new EventSource("/api/events");
+    es.onmessage = (e) => render(JSON.parse(e.data));
+  </script>
+</body>
+</html>
